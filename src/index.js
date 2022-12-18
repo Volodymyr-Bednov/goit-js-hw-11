@@ -46,7 +46,7 @@ const getData = currentState => {
 };
 
 const hidenButton = totalPages => {
-  if (currentState.page >= Math.floor(totalPages) && currentState.page !== 1) {
+  if (currentState.page >= Math.floor(totalPages)) {
     Notiflix.Notify.failure(
       "We're sorry, but you've reached the end of search results."
     );
