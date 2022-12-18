@@ -22,6 +22,7 @@ formRef.addEventListener('submit', evt => {
   getData(currentState);
 
   findValue.value = '';
+  clearGallery();
 });
 
 const getData = currentState => {
@@ -32,30 +33,42 @@ const getData = currentState => {
       );
       return;
     }
+    if (currentState.page === 1) {
+      Notiflix.Notify.success(`Hooray! We found ${data.totalHits} images.`);
+    }
     const totalPages = data.totalHits / data.hits.length;
     console.log(currentState.page, Math.floor(totalPages));
     hidenButton(totalPages);
+    console.log(data);
     renderContent(data.hits);
+    box.refresh();
   });
 };
 
 const hidenButton = totalPages => {
-  if (currentState.page >= Math.floor(totalPages)) {
+  if (currentState.page >= Math.floor(totalPages) && currentState.page !== 1) {
     Notiflix.Notify.failure(
       "We're sorry, but you've reached the end of search results."
     );
-    loadMoreBtnRef.hidden = true;
+    loadMoreBtnRef.classList.add('is-hidden');
     return;
   }
-  loadMoreBtnRef.hidden = false;
+  loadMoreBtnRef.classList.remove('is-hidden');
 };
 
 const renderContent = comment => {
-  clearGallery();
   galleryRef.insertAdjacentHTML(
     'beforeend',
     comment.map(item => createContent(item)).join('')
   );
+  const { height: cardHeight } = document
+    .querySelector('.gallery')
+    .firstElementChild.getBoundingClientRect();
+
+  window.scrollBy({
+    top: cardHeight * 2,
+    behavior: 'smooth',
+  });
 };
 
 const createContent = ({
@@ -67,9 +80,10 @@ const createContent = ({
   comments,
   downloads,
 }) => {
+  //
   return `
-    <div class="photo-card">
-        <a href="${largeImageURL}"><img src="${webformatURL}" alt="${tags}" loading="lazy" class="item-image"/></a>
+     <div class="photo-card">
+        <a class="gallery__link" href="${largeImageURL}"><img src="${webformatURL}" alt="${tags}" loading="lazy" class="item-image"/></a>
         <div class="info">
             <p class="info-item">
             <b>Likes:</b><span>${likes}</span>
@@ -98,7 +112,4 @@ loadMoreBtnRef.addEventListener('click', evt => {
   getData(currentState);
 });
 
-let lightbox = new SimpleLightbox('.gallery a', {
-  captionsData: 'alt',
-  captionDelay: 250,
-});
+let box = new SimpleLightbox('.gallery a');
