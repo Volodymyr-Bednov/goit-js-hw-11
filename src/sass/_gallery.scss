@@ -1,0 +1,28 @@
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+
+  width: 1600px;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin: 0 auto;
+}
+
+.photo-card {
+  border: 1px solid #c9c9c9c9;
+}
+
+.item-image {
+  width: 370px;
+}
+
+.info {
+  display: flex;
+  justify-content: space-around;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+}
