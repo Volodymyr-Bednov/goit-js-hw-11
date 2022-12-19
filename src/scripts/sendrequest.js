@@ -15,7 +15,6 @@ const getImages = async ({ query, page }) => {
         safesearch: 'true',
       },
     });
-
     return data;
   } catch (error) {
     console.log(error);

@@ -38,10 +38,8 @@ const getData = async currentState => {
   if (currentState.page === 1) {
     notiflix.Notify.success(`Hooray! We found ${data.totalHits} images.`);
   }
-
   const totalPages = Math.floor(data.totalHits / data.hits.length);
   if (totalPages > 1) viewButton();
-
   if (currentState.page === totalPages) {
     notiflix.Notify.info(
       "We're sorry, but you've reached the end of search results."
@@ -68,7 +66,6 @@ const createContent = ({
   comments,
   downloads,
 }) => {
-  //
   return `
     <div class="photo-card">
         <a class="gallery__link" href="${largeImageURL}"><img src="${webformatURL}" alt="${tags}" loading="lazy" class="item-image"/></a>
@@ -106,12 +103,8 @@ const viewButton = () => {
 
 loadMoreBtnRef.addEventListener('click', async evt => {
   currentState.page += 1;
-  console.log('a-1');
   const dd = await getData(currentState);
-  console.log('a-2');
-  console.log('a-4');
   scrollUp();
-  console.log('a-5');
 });
 
 const scrollUp = () => {
