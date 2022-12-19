@@ -28,7 +28,6 @@ formRef.addEventListener('submit', evt => {
 
 const getData = async currentState => {
   const { data } = await getImages(currentState);
-  console.log(data);
   if (data.totalHits === 0) {
     notiflix.Notify.failure(
       'Sorry, there are no images matching your search query. Please try again.'
@@ -112,13 +111,10 @@ const scrollUp = () => {
     .querySelector('.gallery')
     .firstElementChild.getBoundingClientRect();
 
-  console.log(cardHeight);
-
-  const scroll = window.scrollBy({
+  window.scrollBy({
     top: cardHeight * 2,
     behavior: 'smooth',
   });
-  console.log(scroll);
 };
 
 let box = new simpleLightbox('.gallery a');
